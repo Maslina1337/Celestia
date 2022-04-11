@@ -8,18 +8,17 @@ class Backpack {
 public:
 	string item_name;
 	string about;
-	int index; // for arreys (it's beggining from 0)
+	int index; // for arreys (it's beggining from 0). DO NOT TOUCH.
 
 	Backpack() {
 		item_name = "no_name";
 		about = "no_about";
-		index = 0;
+		index = -1;
 	}
 
-	Backpack(string item_name, string about, int index) {
+	Backpack(string item_name, string about) {
 		this->item_name = item_name;
 		this->about = about;
-		this->index = index;
 	}
 	;
 };
@@ -32,6 +31,7 @@ public:
 	int age;
 	int birth_day;
 	int birth_month;
+	int birth_year;
 
 	Backpack* backpack;
 	int backpack_size; // beggining from 1
@@ -45,6 +45,7 @@ public:
 		birth_month = 0;
 		backpack = NULL;
 		backpack_size = 0;
+		birth_year = 0;
 	};
 
 	//Make a HC without backpack.
@@ -55,6 +56,7 @@ public:
 		this->age = age;
 		this->birth_day = birth_day;
 		this->birth_month = birth_month;
+		this->birth_year = birth_year;
 	}
 
 	~HeroicCreature() {
@@ -75,7 +77,7 @@ public:
 	void add_item(Backpack item) {
 		if (backpack == NULL) {
 			backpack = new Backpack[1];
-			backpack[1] = item;
+			backpack[0] = item;
 			item.index = 0;
 			backpack_size = 1;
 
@@ -87,25 +89,36 @@ public:
 			temp[i] = backpack[i];
 		}
 		temp[backpack_size] = item;
+		item.index = backpack_size;
+		backpack_size++;
 		backpack = temp;
 		delete[] temp;
 	}
 
-	/*void remove_item(Backpack item) {
+	void remove_item(string name) { // Remove by name.
+		if (backpack == NULL) {
+			return;
+		}
+
 		Backpack* temp = new Backpack[backpack_size--];
 		for (int i = 0, j = 0; i < backpack_size; i++, j++) {
-			if (item == backpack[j]) {
-				
+			if (backpack[i].item_name == name) {
+				j--;
 			}
-				temp[i] = backpack[i];
+			temp[j] = backpack[i];
 		}
-		temp[backpack_size] = item;
+		backpack_size--;
 		backpack = temp;
 		delete[] temp;
-	}*/
+	}
+
+	void display_content_of_backpack() {
+		for (int i = 0; i < backpack_size; i++) {
+			cout << backpack[i].item_name << endl << backpack[i].about;
+		}
+	}
 	;
 private:
 	string private_name;
-	int birth_year;
 	;
 };

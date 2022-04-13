@@ -24,6 +24,9 @@ public:
 };
 
 class HeroicCreature {
+
+	friend 
+
 public:
 	string public_name;
 	string constellation;
@@ -49,7 +52,7 @@ public:
 	};
 
 	//Make a HC without backpack.
-	HeroicCreature(string public_name, string constellation, string about, int age, int birth_day, int birth_month) {
+	HeroicCreature(string public_name, string constellation, string about, int age, int birth_day, int birth_month, int birth_year) {
 		this->public_name = public_name;
 		this->constellation = constellation;
 		this->about = about;
@@ -85,12 +88,18 @@ public:
 		}
 
 		Backpack* temp = new Backpack[backpack_size++];
-		for (int i = 0; i < backpack_size; i++) {
+		cout << "H1H: " << backpack_size;
+		for (int i = 0; i < backpack_size--; i++) {
 			temp[i] = backpack[i];
+			cout << "H2H: " << backpack_size;
 		}
-		temp[backpack_size] = item;
-		item.index = backpack_size;
 		backpack_size++;
+		cout << "H3H: " << backpack_size;
+		item.index = backpack_size;
+		temp[backpack_size] = item;
+		cout << "H4H: " << backpack_size;
+		backpack_size++;
+		cout << "H5H: " << backpack_size;
 		backpack = temp;
 		delete[] temp;
 	}
@@ -113,8 +122,9 @@ public:
 	}
 
 	void display_content_of_backpack() {
+		cout << "Name: " << public_name << endl << "Constellation: " << constellation << endl << "About: " << about << endl << endl << "Backpack:" << endl;
 		for (int i = 0; i < backpack_size; i++) {
-			cout << backpack[i].item_name << endl << backpack[i].about;
+			cout << endl << backpack[i].item_name << endl << backpack[i].about << endl;
 		}
 	}
 	;

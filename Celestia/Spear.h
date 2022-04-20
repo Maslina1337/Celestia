@@ -101,19 +101,32 @@ public:
 		backpack = temp;
 	}
 
-	void remove_item(string name) { // Remove by name.
+	void remove_item_by_name(string name) { // Remove by item_name.
 		if (backpack == NULL) {
-			return;
-		}
-
-		if (backpack_size == 1) {
-			backpack = NULL;
 			return;
 		}
 
 		Backpack* temp = new Backpack[backpack_size - 1];
 		for (int i = 0, j = 0; i < backpack_size; i++, j++) {
 			if (backpack[i].item_name == name) {
+				j--;
+			}
+			else {
+				temp[j] = backpack[i];
+			}
+		}
+		backpack_size--;
+		backpack = temp;
+	}
+
+	void remove_item_by_about(string about) { // Remove by item_about.
+		if (backpack == NULL) {
+			return;
+		}
+
+		Backpack* temp = new Backpack[backpack_size - 1];
+		for (int i = 0, j = 0; i < backpack_size; i++, j++) {
+			if (backpack[i].item_about == about) {
 				j--;
 			}
 			else {
@@ -164,6 +177,22 @@ public:
 		backpack = NULL;
 	}
 
+	int find_by_name(string name) {
+		for (int i = 0; i < backpack_size; i++) {
+			if (backpack[i].item_name == name) {
+				return i;
+			}
+		}
+	}
+
+	int find_by_about(string about) {
+		for (int i = 0; i < backpack_size; i++) {
+			if (backpack[i].item_about == about) {
+				return i;
+			}
+		}
+	}
+
 	void display_info_about_heroic_creature() {
 		cout << "Name: " << public_name << endl << "Constellation: " << constellation << endl << "About: " << about << endl;
 	}
@@ -171,7 +200,7 @@ public:
 	void display_content_of_backpack() {
 		cout << "Backpack:" << endl;
 		for (int i = 0; i < backpack_size; i++) {
-			cout << endl << backpack[i].item_name << endl << backpack[i].about << endl;
+			cout << endl << backpack[i].item_name << endl << backpack[i].item_about << endl;
 		}
 	}
 	;

@@ -137,6 +137,24 @@ public:
 		backpack = temp;
 	}
 
+	void remove_item_by_index(int index) { // Remove by index.
+		if (backpack == NULL) {
+			return;
+		}
+
+		Backpack* temp = new Backpack[backpack_size - 1];
+		for (int i = 0, j = 0; i < backpack_size; i++, j++) {
+			if (backpack[i].index == index) {
+				j--;
+			}
+			else {
+				temp[j] = backpack[i];
+			}
+		}
+		backpack_size--;
+		backpack = temp;
+	}
+
 	void remove_item_last_added() { // Remove last added.
 		if (backpack == NULL) {
 			return;
@@ -183,6 +201,8 @@ public:
 				return i;
 			}
 		}
+
+		return -1;
 	}
 
 	int find_by_about(string about) {
@@ -191,6 +211,8 @@ public:
 				return i;
 			}
 		}
+
+		return -1;
 	}
 
 	void display_info_about_heroic_creature() {

@@ -2,6 +2,8 @@
 #include <string>
 #include <ctime>
 
+#define ENG_ALPHABET "abcdefghijklmnopqrstuvwxyz"
+
 using namespace std;
 
 //layouts of functions.
@@ -13,7 +15,6 @@ public:
 	string item_name;
 	string item_type;
 	string item_about;
-	int index; // for arreys (it's beggining from 0). DO NOT TOUCH.
 
 	Backpack() {
 		item_name = "no_name";
@@ -28,6 +29,17 @@ public:
 		this->item_about = about;
 	}
 	;
+
+	int get_index() {
+		return index;
+	}
+
+	void set_index(int index) {
+		this->index = index;
+	}
+private:
+	int index; // for arreys (it's beggining from 0). DO NOT TOUCH.
+	;
 };
 
 class HeroicCreature {
@@ -41,6 +53,7 @@ public:
 	int birth_year;
 
 	Backpack* backpack;
+	Backpack* backpack_sorted;
 	int backpack_size; // beggining from 1
 
 	HeroicCreature() {
@@ -52,6 +65,7 @@ public:
 		birth_month = 0;
 		birth_year = 0;
 		backpack = NULL;
+		backpack_sorted = NULL;
 		backpack_size = 0;
 	};
 
@@ -85,7 +99,7 @@ public:
 		if (backpack == NULL) {
 			backpack = new Backpack[1];
 			backpack[0] = item;
-			item.index = 0;
+			item.set_index(0);
 			backpack_size = 1;
 
 			return;
@@ -96,8 +110,8 @@ public:
 			temp[i] = backpack[i];
 		}
 		backpack_size++;
-		item.index = backpack_size - 1;
-		temp[item.index] = item;
+		item.set_index(backpack_size - 1);
+		temp[item.get_index()] = item;
 		backpack = temp;
 	}
 
@@ -144,7 +158,7 @@ public:
 
 		Backpack* temp = new Backpack[backpack_size - 1];
 		for (int i = 0, j = 0; i < backpack_size; i++, j++) {
-			if (backpack[i].index == index) {
+			if (backpack[i].get_index() == index) {
 				j--;
 			}
 			else {
@@ -195,7 +209,7 @@ public:
 		backpack = NULL;
 	}
 
-	int find_by_name(string name) {
+	int find_by_name(string name) { //if (find_by_name(...) != -1) {...}
 		for (int i = 0; i < backpack_size; i++) {
 			if (backpack[i].item_name == name) {
 				return i;
@@ -205,7 +219,7 @@ public:
 		return -1;
 	}
 
-	int find_by_about(string about) {
+	int find_by_about(string about) { //if (find_by_about(...) != -1) {...}
 		for (int i = 0; i < backpack_size; i++) {
 			if (backpack[i].item_about == about) {
 				return i;
@@ -214,6 +228,18 @@ public:
 
 		return -1;
 	}
+
+	/*void sort_by_name_eng() {
+		string eng = ENG_ALPHABET;
+		Backpack* temp = new Backpack[backpack_size];
+		for (int i = 0; i < backpack_size; i++) {
+			if ()
+		}
+		backpack_size++;
+		item.set_index(backpack_size - 1);
+		temp[item.get_index()] = item;
+		backpack = temp;
+	}*/
 
 	void display_info_about_heroic_creature() {
 		cout << "Name: " << public_name << endl << "Constellation: " << constellation << endl << "About: " << about << endl;
